@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Manipulation</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background-color:pink;
+            text-align:center;
+        }
+        h1{
+            color:darkblue;
+        }
+
+        #container{
+            width:400px;
+            margin:auto;
+            padding:20px;
+            background:white;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+	button{ padding:10px; margin:5px; border:none; background-color:steelblue; 
+			color:white; border-radius:5px; cursor:pointer; 
+		}
+        button:hover{
+            background-color:darkblue;
+        }
+        #box{
+            width:200px;
+            height:100px;
+            margin:20px auto;
+            background-color:lightblue;
+            line-height:100px;
+            font-weight:bold;
+        }
+
+        ul{
+            text-align:left;
+        }
+    </style>
+</head>
+<body>
+<h1 id="title">DOM MANIPULATION PROGRAM</h1>
+<div id="container">
+    <p id="text">This is a sample paragraph.</p>
+    <div id="box">DOM BOX</div>
+    <input type="text" id="itemInput" placeholder="Enter list item">
+    <br><br>
+    <input type="text" id="paraInput" placeholder="Enter  text">
+    <br><br>
+    <p> Click this button to change the paragraph text using the input above.</p>
+    <button onclick="changeText()">Change Text</button>
+    <p>Click this button to change the box color and text randomly.</p>
+    <button onclick="changeColor()">Change Box Color</button>
+    <p> Click this button to add a new item to the list.</p>
+    <button onclick="addItem()">Add List Item</button>
+    <p> Click this button to remove the last item from the list.</p>
+    <button onclick="removeItem()">Remove Last Item</button>
+    <p>Click this button to create a new paragraph dynamically.</p>
+    <button onclick="createParagraph()">Create Paragraph</button>
+    <p>Click this button to delete the last created paragraph.</p>
+    <button onclick="deleteParagraph()">Delete Last Paragraph</button>
+    <p> Click this button to hide or show the main paragraph.</p>
+    <button onclick="hideText()">Hide Text</button>
+    <h3>Dynamic List</h3>
+    <ul id="list">
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ul>
+</div>
+<script>
+    function changeText()
+    {
+        var inputText = document.getElementById("paraInput").value;
+
+        if(inputText == "")
+        {
+            alert("Please enter text to change the paragraph");
+            return;
+        }
+        var element = document.getElementById("text");
+        element.innerHTML = inputText;
+
+        document.getElementById("paraInput").value = "";
+    }
+        function changeColor()
+    {
+        var box = document.getElementById("box");
+        var colors = ["lightgreen","orange","lightyellow","violet","lightcoral"];
+ var texts = ["HELLO DOM","COLORCHANGED","JAVASCRIPT","WELCOME","DYNAMIC BOX"];
+        var random = Math.floor(Math.random()*colors.length);
+        box.style.backgroundColor = colors[random];
+        box.innerHTML = texts[random];
+    }
+    function addItem()
+    {
+        var input = document.getElementById("itemInput").value;
+
+        if(input == "")
+        {
+            alert("Please enter an item");
+            return;
+        }
+        var li = document.createElement("li");
+        li.innerHTML = input;
+
+        document.getElementById("list").appendChild(li);
+
+        document.getElementById("itemInput").value = "";
+    }
+
+    function removeItem()
+    {
+        var list = document.getElementById("list");
+
+        if(list.lastElementChild)
+        {
+            list.removeChild(list.lastElementChild);
+        }
+        else
+        {
+            alert("No items to remove");
+        }
+    }
+    
+    function createParagraph()
+    {
+        var text = document.getElementById("paraInput").value;
+        if(text == "")
+        {
+            alert("Enter paragraph text");
+            return;
+        }
+        var p = document.createElement("p");
+        p.innerHTML = text;
+        p.style.color = "darkred";
+        p.style.fontWeight = "bold";
+        p.className = "dynamicPara";   
+        document.getElementById("container").appendChild(p);
+        document.getElementById("paraInput").value = "";
+    }
+    function deleteParagraph()
+    {
+        var container = document.getElementById("container");
+        var paragraphs = container.getElementsByClassName("dynamicPara");
+
+        if(paragraphs.length > 0)
+        {
+            container.removeChild(paragraphs[paragraphs.length - 1]);
+        }
+    }
+    function hideText()
+    {
+        var text = document.getElementById("text");
+
+        if(text.style.display === "none")
+        {            text.style.display = "block";        }
+        else        {            text.style.display = "none";        }
+    }
+</script>
+</body>
+</html>
